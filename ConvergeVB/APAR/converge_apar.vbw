@@ -1,0 +1,6 @@
+export = 13, 122, 546, 668, C
+export_customer = 201, 56, 756, 475, C
+modUtilites = 150, 39, 794, 404, C
+export_vendor = 88, 88, 643, 507, C
+export_sales_invoice = 154, 154, 787, 574, C
+export_item = 0, 0, 0, 0, C

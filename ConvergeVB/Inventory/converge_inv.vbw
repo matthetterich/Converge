@@ -1,0 +1,13 @@
+phy_inv = 66, 66, 589, 506, 
+lot_inspect = 0, 0, 0, 0, C
+inventory_bin = 132, 132, 655, 572, 
+inventory_loc = 0, 0, 0, 0, C
+on_ord_inv_adj = 0, 0, 0, 0, C
+supplier_lot = 0, 0, 0, 0, C
+inventory_alloc = 0, 0, 0, 0, C
+modUtilites = 0, 0, 0, 0, C
+lot = 44, 44, 567, 484, 
+inventory_adjs = 110, 110, 633, 550, 
+inventory_adj = 22, 22, 545, 462, 
+inventory_util = 0, 0, 0, 0, C
+on_ord_inv_alloc = 0, 0, 0, 0, C

@@ -1,0 +1,14 @@
+modUtilites = 0, 0, 0, 0, C
+Name = 44, 44, 567, 484, 
+address = 0, 0, 0, 0, C
+Contact = 0, 0, 0, 0, C
+Comment = 66, 66, 589, 506, 
+message = 0, 0, 0, 0, C
+error = 0, 0, 0, 0, C
+utilities = 0, 0, 0, 0, C
+sequence = 0, 0, 0, 0, C
+code_desc = 0, 0, 0, 0, C
+transaction = 22, 22, 545, 462, 
+clsTransProps = 110, 110, 1213, 780, 
+trans_data = 88, 88, 611, 528, Z
+MiscFunctions = 0, 0, 0, 0, C

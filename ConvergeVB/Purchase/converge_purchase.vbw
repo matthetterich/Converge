@@ -1,0 +1,10 @@
+purchase_order_ret = 0, 0, 0, 0, C
+supplier = 0, 0, 0, 0, C
+modUtilites = 0, 0, 0, 0, C
+purchase_order_hist = 0, 0, 0, 0, C
+po_item_hist = 0, 0, 0, 0, C
+cost_break = 0, 0, 0, 0, C
+purchase_order_rec = 88, 88, 611, 528, 
+purchase_order_item = 110, 110, 633, 550, C
+supplier_item = 0, 0, 0, 0, C
+purchase_order = 0, 0, 0, 0, C

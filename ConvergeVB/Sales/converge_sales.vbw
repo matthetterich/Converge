@@ -1,0 +1,13 @@
+modUtilites = 0, 0, 0, 0, C
+cust_group = 0, 0, 0, 0, C
+cust_item = 22, 22, 737, 650, 
+sales_order_item = 0, 0, 0, 0, C
+sales_quote = 0, 0, 0, 0, C
+sales_quote_item = 0, 0, 0, 0, C
+price_break = 0, 0, 0, 0, C
+sales_order = 0, 0, 0, 0, C
+shipment_item = 0, 0, 0, 0, C
+shipment = 0, 0, 0, 0, C
+sales_invoice_item = 0, 0, 0, 0, C
+customer = 0, 0, 0, 0, C
+sales_invoice = 0, 0, 0, 0, C

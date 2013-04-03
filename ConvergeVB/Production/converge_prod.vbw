@@ -1,0 +1,8 @@
+modUtilites = 0, 0, 0, 0, C
+prod_run = 0, 0, 0, 0, C
+Bill_of_Material = 0, 0, 0, 0, C
+Bill_of_Materials = 0, 0, 0, 0, C
+comp_lot = 0, 0, 0, 0, C
+mat_req = 0, 0, 0, 0, C
+assembly_ord = 0, 0, 0, 0, C
+assembly_comp = 0, 0, 0, 0, C
