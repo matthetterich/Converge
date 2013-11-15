@@ -56,6 +56,18 @@ Public Sub extract( _
     & ", KEEPNULLS " _
     & ") "
     
+    strSqlTx = _
+      "BULK INSERT dwh_sales_detail " _
+    & "From 'c:\data shares\dwhextract\CONVERGE_DWH_LOAD.TXT' " _
+    & "WITH ( " _
+    & "  DATAFILETYPE = 'char' " _
+    & ", FIELDTERMINATOR = '<col>' " _
+    & ", ROWTERMINATOR = '<row>\n' " _
+    & ", TABLOCK " _
+    & ", KEEPNULLS " _
+    & ") "
+    
+
     r_conDwh.CommandTimeout = 7200
     Call r_conDwh.Execute(strSqlTx)
     Kill v_strUnloadFileNm
@@ -370,7 +382,7 @@ Private Sub insertNonDropShipPurchasedItems( _
         dblSalesItemCost = CDbl(objRecordset("lot_unit_cost"))
         dblOrigSalesItemCost = dblSalesItemCost
         If (isJLSItem(objRecordset("inv_loc_id"), replaceNull2(objRecordset("supplier_id")), replaceNull(objRecordset("jls_inv_loc_id")), dteSalesDt)) Then
-            dblSalesItemCost = dblSalesItemCost * 1.07
+            dblSalesItemCost = dblSalesItemCost * getJSLIncreaseFactor()
         End If
             
                     'if customer is goodmn, cust_id = 1160, check
@@ -495,9 +507,8 @@ Private Sub insertNonDropShipPurchasedItems( _
           & dblSalesCommAm & "<col>" _
           & Round(dblSalesPrice, 2) & "<col>" _
           & Round(dblSalesCost, 2) & "<col>" _
-          & dblSalesProfitAm & "<row>"
+          & Round(dblSalesProfitAm, 2) & "<row>"
 
-        Print #v_lngFileId, strLoadRecord
         Call objRecordset.MoveNext
     Loop
     
@@ -673,7 +684,7 @@ Private Sub insertNonDropShipAssembledItems( _
         dblSalesItemCost = CDbl(objRecordset("lot_unit_cost"))
         dblOrigSalesItemCost = dblSalesItemCost
         If (isJLSItem(objRecordset("inv_loc_id"), 0, "", dteSalesDt)) Then
-            dblSalesItemCost = dblSalesItemCost * 1.07
+            dblSalesItemCost = dblSalesItemCost * getJSLIncreaseFactor()
         End If
             
                     'if customer is goodmn, cust_id = 1160, check
@@ -796,7 +807,7 @@ Private Sub insertNonDropShipAssembledItems( _
             & dblSalesCommAm & "<col>" _
             & Round(dblSalesPrice, 2) & "<col>" _
             & Round(dblSalesCost, 2) & "<col>" _
-            & dblSalesProfitAm & "<row>"
+            & Round(dblSalesProfitAm, 2) & "<row>"
         
         Print #v_lngFileId, strLoadRecord
         Call objRecordset.MoveNext
@@ -971,7 +982,7 @@ Private Sub insertDropShipPurchasedItems( _
         dblSalesItemCost = CDbl(objRecordset("po_item_cost"))
         dblOrigSalesItemCost = dblSalesItemCost
         If (isJLSItem("", 0, "", dteSalesDt)) Then
-            dblSalesItemCost = dblSalesItemCost * 1.07
+            dblSalesItemCost = dblSalesItemCost * getJSLIncreaseFactor()
         End If
             
                     'if customer is goodmn, cust_id = 1160, check
@@ -1094,7 +1105,7 @@ Private Sub insertDropShipPurchasedItems( _
             & dblSalesCommAm & "<col>" _
             & Round(dblSalesPrice, 2) & "<col>" _
             & Round(dblSalesCost, 2) & "<col>" _
-            & dblSalesProfitAm & "<row>"
+            & Round(dblSalesProfitAm, 2) & "<row>"
         
         Print #v_lngFileId, strLoadRecord
 
@@ -1532,6 +1543,13 @@ Private Function replaceNull2(ByVal inValue As Variant) As Variant
         replaceNull2 = 0
     Else
         replaceNull2 = inValue
+    End If
+End Function
+
+Private Function getJSLIncreaseFactor() As Double
+    getJSLIncreaseFactor = 1.07
+    If (Now > CDate("2012-12-31")) Then
+        getJSLIncreaseFactor = 1.1
     End If
 End Function
 

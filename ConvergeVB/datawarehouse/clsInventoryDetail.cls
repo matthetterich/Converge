@@ -331,6 +331,17 @@ Private Sub insertRecords( _
     & ", KEEPNULLS " _
     & ") "
     
+    strSqlTx = _
+      "BULK INSERT dwh_inventory_detail " _
+    & " From 'c:\data shares\dwhextract\CONVERGE_DWH_LOAD.TXT' " _
+    & " WITH ( " _
+    & "  DATAFILETYPE = 'char' " _
+    & ", FIELDTERMINATOR = '<col>' " _
+    & ", ROWTERMINATOR = '<row>\n' " _
+    & ", TABLOCK " _
+    & ", KEEPNULLS " _
+    & ") "
+    
     r_conDwh.CommandTimeout = 7200
     Call r_conDwh.Execute(strSqlTx)
     Kill v_strUnloadFileNm
