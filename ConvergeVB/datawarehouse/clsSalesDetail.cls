@@ -443,9 +443,9 @@ Private Sub insertNonDropShipPurchasedItems( _
         End If
         
         If dteSalesDt >= CDate("1/1/2012") Then
-            dblSalesCommPct = getLatestCommPct(r_objError, dblCommMarkUpPct, dteInitialPurchaseDt, dteSalesDt, dblCustItemYrs, objRecordset("cust_id"), objRecordset("sales_rep_assoc_id"))
+            dblSalesCommPct = getLatestCommPct(r_objError, dblCommMarkUpPct, dteInitialPurchaseDt, dteSalesDt, dblCustItemYrs, objRecordset("cust_id"), objRecordset("sales_rep_assoc_id"), objRecordset("commodity_cd"))
         Else
-            dblSalesCommPct = getCommPct(r_objError, dblCommMarkUpPct, dteInitialPurchaseDt, dteSalesDt, dblCustItemYrs, objRecordset("cust_id"), objRecordset("sales_rep_assoc_id"), objRecordset("inv_loc_id"), replaceNull2(objRecordset("supplier_id")), replaceNull(objRecordset("jls_inv_loc_id")))
+            dblSalesCommPct = getCommPct(r_objError, dblCommMarkUpPct, dteInitialPurchaseDt, dteSalesDt, dblCustItemYrs, objRecordset("cust_id"), objRecordset("sales_rep_assoc_id"), objRecordset("inv_loc_id"), replaceNull2(objRecordset("supplier_id")), replaceNull(objRecordset("jls_inv_loc_id")), objRecordset("commodity_cd"))
         End If
         dblSalesCommAm = Round(dblSalesItemQty * dblSalesItemPrice * dblSalesCommPct, 2)
         
@@ -509,6 +509,7 @@ Private Sub insertNonDropShipPurchasedItems( _
           & Round(dblSalesCost, 2) & "<col>" _
           & Round(dblSalesProfitAm, 2) & "<row>"
 
+        Print #v_lngFileId, strLoadRecord
         Call objRecordset.MoveNext
     Loop
     
@@ -743,9 +744,9 @@ Private Sub insertNonDropShipAssembledItems( _
         End If
         
         If dteSalesDt >= CDate("1/1/2012") Then
-            dblSalesCommPct = getLatestCommPct(r_objError, dblCommMarkUpPct, dteInitialPurchaseDt, dteSalesDt, dblCustItemYrs, objRecordset("cust_id"), objRecordset("sales_rep_assoc_id"))
+            dblSalesCommPct = getLatestCommPct(r_objError, dblCommMarkUpPct, dteInitialPurchaseDt, dteSalesDt, dblCustItemYrs, objRecordset("cust_id"), objRecordset("sales_rep_assoc_id"), objRecordset("commodity_cd"))
         Else
-            dblSalesCommPct = getCommPct(r_objError, dblCommMarkUpPct, dteInitialPurchaseDt, dteSalesDt, dblCustItemYrs, objRecordset("cust_id"), objRecordset("sales_rep_assoc_id"), objRecordset("inv_loc_id"), 0, "")
+            dblSalesCommPct = getCommPct(r_objError, dblCommMarkUpPct, dteInitialPurchaseDt, dteSalesDt, dblCustItemYrs, objRecordset("cust_id"), objRecordset("sales_rep_assoc_id"), objRecordset("inv_loc_id"), 0, "", objRecordset("commodity_cd"))
         End If
         dblSalesCommAm = Round(dblSalesItemQty * dblSalesItemPrice * dblSalesCommPct, 2)
         
@@ -1041,9 +1042,9 @@ Private Sub insertDropShipPurchasedItems( _
         End If
         
         If dteSalesDt >= CDate("1/1/2012") Then
-            dblSalesCommPct = getLatestCommPct(r_objError, dblCommMarkUpPct, dteInitialPurchaseDt, dteSalesDt, dblCustItemYrs, objRecordset("cust_id"), objRecordset("sales_rep_assoc_id"))
+            dblSalesCommPct = getLatestCommPct(r_objError, dblCommMarkUpPct, dteInitialPurchaseDt, dteSalesDt, dblCustItemYrs, objRecordset("cust_id"), objRecordset("sales_rep_assoc_id"), objRecordset("commodity_cd"))
         Else
-            dblSalesCommPct = getCommPct(r_objError, dblCommMarkUpPct, dteInitialPurchaseDt, dteSalesDt, dblCustItemYrs, objRecordset("cust_id"), objRecordset("sales_rep_assoc_id"), "", 0, "")
+            dblSalesCommPct = getCommPct(r_objError, dblCommMarkUpPct, dteInitialPurchaseDt, dteSalesDt, dblCustItemYrs, objRecordset("cust_id"), objRecordset("sales_rep_assoc_id"), "", 0, "", objRecordset("commodity_cd"))
         End If
         dblSalesCommAm = Round(dblSalesItemQty * dblSalesItemPrice * dblSalesCommPct, 2)
         
@@ -1197,12 +1198,19 @@ Private Function getCommPct( _
             , ByRef v_strInvLocId As String _
             , ByRef v_strSupplierId As Integer _
             , ByRef v_strJLSInvLocId As String _
+            , ByRef v_strCommodityCode _
             ) As Double
 
     
     On Error GoTo errHandler
     Dim strRoutineNm As String
     strRoutineNm = G_STR_PROJECT_NM & "." & M_STR_CLASS_NM & "." & "getCommPct"
+    
+        'if commodity code is "SC" (Setup Charge) set commition pct to 0
+    If (v_strCommodityCode = "SC") Then
+        getCommPct = 0
+        Exit Function
+    End If
     
     If IsNull(v_dblAssocId) Then
         v_dblAssocId = 0
@@ -1319,12 +1327,19 @@ Private Function getLatestCommPct( _
             , ByRef r_dblCustItemYrs As Double _
             , ByRef v_dblCustId As Double _
             , ByRef v_dblAssocId As Variant _
+            , ByRef v_strCommodityCode _
             ) As Double
 
     
     On Error GoTo errHandler
     Dim strRoutineNm As String
     strRoutineNm = G_STR_PROJECT_NM & "." & M_STR_CLASS_NM & "." & "getCommPct"
+    
+        'if commodity code is "SC" (Setup Charge) set commition pct to 0
+    If (v_strCommodityCode = "SC") Then
+        getLatestCommPct = 0
+        Exit Function
+    End If
     
     If IsNull(v_dblAssocId) Then
         v_dblAssocId = 0
@@ -1548,7 +1563,7 @@ End Function
 
 Private Function getJSLIncreaseFactor() As Double
     getJSLIncreaseFactor = 1.07
-    If (Now > CDate("2012-12-31")) Then
+    If (Now >= CDate("2014-01-01")) Then
         getJSLIncreaseFactor = 1.1
     End If
 End Function

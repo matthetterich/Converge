@@ -1,6 +1,6 @@
 Type=Exe
-Reference=*\G{00020430-0000-0000-C000-000000000046}#2.0#0#..\..\..\WINDOWS\system32\stdole2.tlb#OLE Automation
-Reference=*\G{00000205-0000-0010-8000-00AA006D2EA4}#2.5#0#..\..\..\Program Files\Common Files\system\ado\msado25.tlb#Microsoft ActiveX Data Objects 2.5 Library
+Reference=*\G{00020430-0000-0000-C000-000000000046}#2.0#0#..\..\..\..\..\..\..\Windows\SysWOW64\stdole2.tlb#OLE Automation
+Reference=*\G{00000205-0000-0010-8000-00AA006D2EA4}#2.5#0#..\..\..\..\..\..\..\Program Files (x86)\Common Files\System\ado\msado25.tlb#Microsoft ActiveX Data Objects 2.5 Library
 Form=frmDWHExtract.frm
 Startup="frmDWHExtract"
 ExeName32="DWHExtract.exe"

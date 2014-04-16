@@ -52,7 +52,7 @@ Option Explicit
 Private M_STR_CONVERGE_CONNECT_STRING As String
 Private M_STR_DWH_CONNECT_STRING As String
 'Private Const M_STR_LOAD_FILE_NM As String = "\\TIMCOTEST\TEMP\CONVERGE_DWH_LOAD.TXT"
-Private Const M_STR_LOAD_FILE_NM As String = "C:\TEMP\CONVERGE_DWH_LOAD.TXT"
+Private Const M_STR_LOAD_FILE_NM As String = "\\tr-sql\dwhextract\CONVERGE_DWH_LOAD.TXT"
 Private Sub cmdExit_Click()
     End
 End Sub
@@ -67,8 +67,32 @@ Private Sub Form_Load()
       , conDwh As ADODB.Connection _
       , conConverge As ADODB.Connection
     
-    M_STR_CONVERGE_CONNECT_STRING = Environ("CONVERGE_CONNECT_STRING")
-    M_STR_DWH_CONNECT_STRING = Environ("CONVERGE_DWH_CONNECT_STRING")
+    Dim convergeConnnectString As String
+    convergeConnnectString = "" & _
+            "Provider=SQLOLEDB; " & _
+            "DRIVER=SQL Server; " & _
+            "UID=Converge; " & _
+            "PWD=volters; " & _
+            "WSID=TR-SQL; " & _
+            "SERVER=TR-SQL; " & _
+            "DATABASE=converge; " & _
+            "APP=Microsoft Data Access Components; " & _
+            "Description=Converge Env Var "
+
+    Dim datawarehouseConnectString As String
+    datawarehouseConnectString = "" & _
+            "Provider=SQLOLEDB; " & _
+            "DRIVER=SQL Server; " & _
+            "UID=Converge; " & _
+            "PWD=volters; " & _
+            "WSID=TR-SQL; " & _
+            "SERVER=TR-SQL; " & _
+            "DATABASE=datawarehouse; " & _
+            "APP=Microsoft Data Access Components; " & _
+            "Description=Converge Env Var "
+
+    M_STR_CONVERGE_CONNECT_STRING = convergeConnnectString
+    M_STR_DWH_CONNECT_STRING = datawarehouseConnectString
     Call Me.Show
     Me.cmdExit.Visible = False
     Me.Refresh
